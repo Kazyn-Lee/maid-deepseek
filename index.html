@@ -1,12 +1,3 @@
-# Wilnor Lavett Website Redesign
-
-I'll create a complete redesign of the Wilnor Lavett website using modern web technologies. For this implementation, I'll use HTML, CSS with Tailwind, and vanilla JavaScript for interactivity. The design will focus on creating a premium feel while optimizing for conversions.
-
-## Complete Website Code
-
-### HTML Structure (index.html)
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -287,84 +278,87 @@ I'll create a complete redesign of the Wilnor Lavett website using modern web te
     </div>
   </header>
 
-  <!-- Hero Section with Properly Positioned Badges -->
-<section class="pt-32 pb-24 relative overflow-hidden">
-    <!-- Background blurred circles -->
-    <div class="blur-circle bg-primary-200 w-[600px] h-[600px] -top-[300px] -left-[300px]"></div>
-    <div class="blur-circle bg-accent-200 w-[500px] h-[500px] -bottom-[250px] -right-[250px]"></div>
-    
-    <div class="container mx-auto px-4 sm:px-6 relative">
-      <!-- Badge Elements in a proper banner layout at top of content -->
-      <div class="flex flex-col md:flex-row gap-3 md:gap-6 justify-center md:justify-end mb-8 md:mb-12 badge-container">
-        <!-- Trusted Helper Badge -->
-        <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-100 transform hover:scale-105 transition-all duration-300">
-          <div class="bg-blue-50 p-2 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857M3 11h18" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-neutral-800 font-medium text-sm">Trusted Helper</h3>
-            <p class="text-neutral-500 text-xs">Professionally Trained</p>
-          </div>
+
+<!-- Hero Section with Properly Positioned Badges -->
+<section class="pb-24 relative overflow-hidden">
+  <!-- Background blurred circles -->
+  <div class="blur-circle bg-primary-200 w-[600px] h-[600px] -top-[300px] -left-[300px]"></div>
+  <div class="blur-circle bg-accent-200 w-[500px] h-[500px] -bottom-[250px] -right-[250px]"></div>
+  
+  <!-- Badge Container with Absolute Positioning -->
+  <div class="absolute top-0 left-0 right-0 z-10 container mx-auto px-4 sm:px-6 pt-4"> 
+    <!-- Badge Elements in a proper banner layout at top of content -->
+    <div class="flex flex-col md:flex-row gap-3 md:gap-6 justify-center md:justify-end mb-12 md:mb-16 badge-container mt-16">
+      <!-- Trusted Helper Badge -->
+      <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-100 transform hover:scale-105 transition-all duration-300">
+        <div class="bg-blue-50 p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857M3 11h18" />
+          </svg>
         </div>
-        
-        <!-- Quick Matching Badge -->
-        <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-200 transform hover:scale-105 transition-all duration-300">
-          <div class="bg-blue-50 p-2 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-neutral-800 font-medium text-sm">Quick Matching</h3>
-            <p class="text-neutral-500 text-xs">Within 24-48 hours</p>
-          </div>
-        </div>
-        
-        <!-- Satisfaction Badge -->
-        <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-300 transform hover:scale-105 transition-all duration-300">
-          <div class="bg-amber-50 p-2 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-neutral-800 font-medium text-sm">Satisfaction</h3>
-            <p class="text-neutral-500 text-xs">100% Guarantee</p>
-          </div>
+        <div>
+          <h3 class="text-neutral-800 font-medium text-sm">Trusted Helper</h3>
+          <p class="text-neutral-500 text-xs">Professionally Trained</p>
         </div>
       </div>
-  
-      <div class="flex flex-col lg:flex-row items-center">
-        <!-- Text Content -->
-        <div class="lg:w-2/3 space-y-6 z-10">
-          <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-[#3366CC] leading-tight animate-fade-in">
-            Stop Stressing<br>
-            <span class="text-neutral-900">Over Helper</span><br>
-            <span class="text-neutral-900">Arrangements</span>
-          </h1>
-          
-          <p class="text-neutral-600 text-lg md:text-xl leading-relaxed max-w-2xl animate-fade-in-delay-200">
-            Find your perfect helper with Wilnor Lavett. We match you with trusted, reliable professionals who fit seamlessly into your home while you focus on what matters most.
-          </p>
-          
-          <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-delay-400">
-            <a href="#quiz" class="bg-[#3366CC] hover:bg-[#2855aa] text-white font-medium text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-center transform hover:scale-105">
-              Find Your Perfect Helper
-            </a>
-            <a href="#how-it-works" class="bg-white hover:bg-neutral-50 text-neutral-700 border border-neutral-200 font-medium text-lg px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-              </svg>
-              How It Works
-            </a>
-          </div>
+      
+      <!-- Quick Matching Badge -->
+      <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-200 transform hover:scale-105 transition-all duration-300">
+        <div class="bg-blue-50 p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-neutral-800 font-medium text-sm">Quick Matching</h3>
+          <p class="text-neutral-500 text-xs">Within 24-48 hours</p>
+        </div>
+      </div>
+      
+      <!-- Satisfaction Badge -->
+      <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-300 transform hover:scale-105 transition-all duration-300">
+        <div class="bg-amber-50 p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-neutral-800 font-medium text-sm">Satisfaction</h3>
+          <p class="text-neutral-500 text-xs">100% Guarantee</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
   
+  <!-- Hero Content (Text Section) -->
+  <div class="flex flex-col lg:flex-row items-center mt-20">
+    <div class="lg:w-2/3 space-y-6 z-10">
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-[#3366CC] leading-tight animate-fade-in">
+        Stop Stressing<br>
+        <span class="text-neutral-900">Over Helper</span><br>
+        <span class="text-neutral-900">Arrangements</span>
+      </h1>
+      
+      <p class="text-neutral-600 text-lg md:text-xl leading-relaxed max-w-2xl animate-fade-in-delay-200">
+        Find your perfect helper with Wilnor Lavett. We match you with trusted, reliable professionals who fit seamlessly into your home while you focus on what matters most.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-delay-400">
+        <a href="#quiz" class="bg-[#3366CC] hover:bg-[#2855aa] text-white font-medium text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-center transform hover:scale-105">
+          Find Your Perfect Helper
+        </a>
+        <a href="#how-it-works" class="bg-white hover:bg-neutral-50 text-neutral-700 border border-neutral-200 font-medium text-lg px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+          </svg>
+          How It Works
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
   
 
   <!-- Features Section -->
