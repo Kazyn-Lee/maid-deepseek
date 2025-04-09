@@ -1,0 +1,389 @@
+# Wilnor Lavett Website Redesign
+
+I'll create a complete redesign of the Wilnor Lavett website using modern web technologies. For this implementation, I'll use HTML, CSS with Tailwind, and vanilla JavaScript for interactivity. The design will focus on creating a premium feel while optimizing for conversions.
+
+## Complete Website Code
+
+### HTML Structure (index.html)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wilnor Lavett | Premium Maid & Helper Services</title>
+  <meta name="description" content="Find your perfect helper with Wilnor Lavett. Professionally trained, thoroughly screened domestic helpers for Singapore homes.">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- GSAP for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Custom styles (extending Tailwind) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eef5ff',
+              100: '#d9eaff',
+              200: '#bdd8ff',
+              300: '#8dbfff',
+              400: '#579eff',
+              500: '#3182f6',
+              600: '#2067eb',
+              700: '#1d56d6',
+              800: '#1e47ab',
+              900: '#1e3f85',
+            },
+            accent: {
+              50: '#fff9eb',
+              100: '#ffefc7',
+              200: '#ffdf8a',
+              300: '#ffc94d',
+              400: '#ffb224',
+              500: '#f99707',
+              600: '#dd7202',
+              700: '#b74e06',
+              800: '#943c0c',
+              900: '#7a330e',
+            },
+            neutral: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+            },
+          },
+          boxShadow: {
+            'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+            'card-hover': '0 20px 40px -5px rgba(0, 0, 0, 0.1)',
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    /* Custom styles that can't be handled by Tailwind */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Hide scrollbar but allow scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    /* Custom animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .animate-float {
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+    @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Animation Utility Classes */
+    .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    }
+    .animate-fade-in-delay-200 {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+    }
+    .animate-fade-in-delay-400 {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+    }
+    .animate-slide-in-left {
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out forwards;
+    }
+    .animate-slide-in-right {
+    opacity: 0;
+    animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    /* Blurred circle backgrounds */
+    .blur-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.35;
+    }
+    
+    /* WhatsApp floating button animation */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+    
+    .whatsapp-btn {
+      animation: pulse-ring 2s infinite;
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased text-neutral-800 overflow-x-hidden">
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/6587654321" class="whatsapp-btn fixed right-5 bottom-5 z-50 bg-[#25D366] text-white rounded-full p-3 shadow-lg hover:bg-[#128C7E] transition-all duration-300 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-40 shadow-sm transition-all duration-300">
+    <div class="container mx-auto px-4 sm:px-6 py-4">
+      <div class="flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#" class="flex items-center">
+          <img src="https://le-cdn.website-editor.net/s/00006ee96b6a44cda76568b03286123a/dms3rep/multi/opt/aiplus--281-29-1920w.jpg" alt="Wilnor Lavett Logo" class="h-10 mr-2">
+          <span class="font-heading font-bold text-lg text-primary-700">Wilnor Lavett</span>
+        </a>
+        
+        <!-- Desktop menu -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#services" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Services</a>
+          <a href="#how-it-works" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">How It Works</a>
+          <a href="#pricing" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Pricing</a>
+          <a href="#testimonials" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Testimonials</a>
+          <a href="#biodata" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Helper Profiles</a>
+        </nav>
+        
+        <!-- CTA buttons -->
+        <div class="hidden md:flex items-center space-x-4">
+          <a href="#contact" class="text-primary-600 hover:text-primary-700 font-medium transition-colors">Contact</a>
+          <a href="#quiz" class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-200">Find Your Helper</a>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="md:hidden text-neutral-600 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-neutral-100 px-4 py-3 hidden">
+      <nav class="flex flex-col space-y-3">
+        <a href="#services" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Services</a>
+        <a href="#how-it-works" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">How It Works</a>
+        <a href="#pricing" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Pricing</a>
+        <a href="#testimonials" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Testimonials</a>
+        <a href="#biodata" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Helper Profiles</a>
+        <a href="#contact" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Contact</a>
+        <a href="#quiz" class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-5 py-3 rounded-full shadow-sm hover:shadow-md transition-all duration-200 text-center mt-2">Find Your Helper</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section with Fixed Layout -->
+  <section class="pt-32 pb-24 relative overflow-hidden">
+    <!-- Background blurred circles -->
+    <div class="blur-circle bg-primary-200 w-[600px] h-[600px] -top-[300px] -left-[300px]"></div>
+    <div class="blur-circle bg-accent-200 w-[500px] h-[500px] -bottom-[250px] -right-[250px]"></div>
+    
+    <div class="container mx-auto px-4 sm:px-6 relative">
+      <div class="flex flex-col lg:flex-row items-center">
+        <!-- Text Content -->
+        <div class="lg:w-1/2 space-y-6 z-10">
+          <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight animate-fade-in">
+            <span class="text-primary-600">Stop Stressing</span><br>
+            Over Helper<br>
+            Arrangements
+          </h1>
+          
+          <p class="text-neutral-600 text-lg md:text-xl leading-relaxed animate-fade-in-delay-200">
+            Find your perfect helper with Wilnor Lavett. We match you with trusted, reliable professionals who fit seamlessly into your home while you focus on what matters most.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-delay-400">
+            <a href="#quiz" class="bg-primary-600 hover:bg-primary-700 text-white font-medium text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-center transform hover:scale-105">
+              Find Your Perfect Helper
+            </a>
+            <a href="#how-it-works" class="bg-white hover:bg-neutral-50 text-neutral-700 border border-neutral-200 font-medium text-lg px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+              </svg>
+              How It Works
+            </a>
+          </div>
+        </div>
+        
+        <!-- Feature Cards Section - Fixed positioning -->
+        <div class="lg:w-1/2 relative mt-12 lg:mt-0 min-h-[300px] md:min-h-[400px]">
+          <!-- Main feature cards container with fixed positioning -->
+          <div class="relative h-full w-full">
+            <!-- Satisfaction Card -->
+            <div class="absolute right-0 top-0 bg-white rounded-2xl shadow-card p-4 w-64 animate-slide-in-right" style="animation-delay: 0.3s">
+              <div class="flex items-center space-x-3">
+                <div class="bg-accent-50 p-3 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-neutral-800 font-medium">Satisfaction</h3>
+                  <p class="text-neutral-500 text-sm">100% Guarantee</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Trusted Helper Card -->
+            <div class="absolute left-0 bottom-0 md:bottom-1/3 bg-white rounded-2xl shadow-card p-4 w-64 animate-slide-in-left" style="animation-delay: 0.5s">
+              <div class="flex items-center space-x-3">
+                <div class="bg-primary-50 p-3 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857M3 11h18" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-neutral-800 font-medium">Trusted Helper</h3>
+                  <p class="text-neutral-500 text-sm">Professionally Trained</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Quick Matching Card -->
+            <div class="absolute right-0 bottom-0 bg-white rounded-2xl shadow-card p-4 w-64 animate-slide-in-right" style="animation-delay: 0.7s">
+              <div class="flex items-center space-x-3">
+                <div class="bg-primary-50 p-3 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-neutral-800 font-medium">Quick Matching</h3>
+                  <p class="text-neutral-500 text-sm">Within 24-48 hours</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Features Section -->
+  <section id="services" class="py-20 bg-neutral-50">
+    <div class="container mx-auto px-4 sm:px-6">
+      <!-- Section header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Say Goodbye to Worries, Hello to Peace of Mind</h2>
+        <p class="text-neutral-600 text-lg">We handle everything for you - from screening to training - so you can focus on what matters most.</p>
+      </div>
+      
+      <!-- Features grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">Fully Screened Professionals</h3>
+          <p class="text-neutral-600 mb-6">We rigorously screen all our helpers through background checks, skills assessment, and character references to ensure they're trustworthy and qualified.</p>
+          <a href="#biodata" class="text-primary-600 font-medium inline-flex items-center group">
+            View our helpers
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">Clear Pricing, No Hidden Fees</h3>
+          <p class="text-neutral-600 mb-6">Our transparent one-time payment covers everything for 12 months. No surprises, no additional costs, so you can budget with confidence.</p>
+          <a href="#pricing" class="text-primary-600 font-medium inline-flex items-center group">
+            View pricing
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">24/7 Support Team</h3>
+          <p class="text-neutral-600 mb-6">Our dedicated support team is available around the clock to assist with any questions, concerns, or guidance you may need.</p>
+          <a href="#contact" class="text-primary-600 font-medium inline-flex items-center group">
+            Contact support
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.
+              
+            
+            
+              

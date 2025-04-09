@@ -1,0 +1,1410 @@
+# Wilnor Lavett Website Redesign
+
+I'll create a complete redesign of the Wilnor Lavett website using modern web technologies. For this implementation, I'll use HTML, CSS with Tailwind, and vanilla JavaScript for interactivity. The design will focus on creating a premium feel while optimizing for conversions.
+
+## Complete Website Code
+
+### HTML Structure (index.html)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wilnor Lavett | Premium Maid & Helper Services</title>
+  <meta name="description" content="Find your perfect helper with Wilnor Lavett. Professionally trained, thoroughly screened domestic helpers for Singapore homes.">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- GSAP for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Custom styles (extending Tailwind) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eef5ff',
+              100: '#d9eaff',
+              200: '#bdd8ff',
+              300: '#8dbfff',
+              400: '#579eff',
+              500: '#3182f6',
+              600: '#2067eb',
+              700: '#1d56d6',
+              800: '#1e47ab',
+              900: '#1e3f85',
+            },
+            accent: {
+              50: '#fff9eb',
+              100: '#ffefc7',
+              200: '#ffdf8a',
+              300: '#ffc94d',
+              400: '#ffb224',
+              500: '#f99707',
+              600: '#dd7202',
+              700: '#b74e06',
+              800: '#943c0c',
+              900: '#7a330e',
+            },
+            neutral: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+            },
+          },
+          boxShadow: {
+            'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+            'card-hover': '0 20px 40px -5px rgba(0, 0, 0, 0.1)',
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    /* Custom styles that can't be handled by Tailwind */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Hide scrollbar but allow scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    /* Custom animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .animate-float {
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+    @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Animation Utility Classes */
+    .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    }
+    .animate-fade-in-delay-200 {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+    }
+    .animate-fade-in-delay-400 {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+    }
+    .animate-slide-in-left {
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out forwards;
+    }
+    .animate-slide-in-right {
+    opacity: 0;
+    animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    /* Blurred circle backgrounds */
+    .blur-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.35;
+    }
+    
+    /* WhatsApp floating button animation */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+    
+    .whatsapp-btn {
+      animation: pulse-ring 2s infinite;
+    }
+
+
+    /* Badge animations and styling */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-fade-in-delay-100 {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+    animation-delay: 0.1s;
+  }
+  
+  .animate-fade-in-delay-200 {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+    animation-delay: 0.2s;
+  }
+  
+  .animate-fade-in-delay-300 {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+  
+  .animate-fade-in-delay-400 {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  
+  /* For small screens, stack badges vertically */
+  @media (max-width: 768px) {
+    .badge-container {
+      position: relative;
+      right: auto;
+      top: auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  /* For larger screens, position badges in a row */
+  @media (min-width: 769px) {
+    .badge-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+  }
+  </style>
+</head>
+
+<body class="font-sans antialiased text-neutral-800 overflow-x-hidden">
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/6587654321" class="whatsapp-btn fixed right-5 bottom-5 z-50 bg-[#25D366] text-white rounded-full p-3 shadow-lg hover:bg-[#128C7E] transition-all duration-300 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-40 shadow-sm transition-all duration-300">
+    <div class="container mx-auto px-4 sm:px-6 py-4">
+      <div class="flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#" class="flex items-center">
+          <img src="https://le-cdn.website-editor.net/s/00006ee96b6a44cda76568b03286123a/dms3rep/multi/opt/aiplus--281-29-1920w.jpg" alt="Wilnor Lavett Logo" class="h-10 mr-2">
+          <span class="font-heading font-bold text-lg text-primary-700">Wilnor Lavett</span>
+        </a>
+        
+        <!-- Desktop menu -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#services" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Services</a>
+          <a href="#how-it-works" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">How It Works</a>
+          <a href="#pricing" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Pricing</a>
+          <a href="#testimonials" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Testimonials</a>
+          <a href="#biodata" class="text-neutral-600 hover:text-primary-600 font-medium transition-colors">Helper Profiles</a>
+        </nav>
+        
+        <!-- CTA buttons -->
+        <div class="hidden md:flex items-center space-x-4">
+          <a href="#contact" class="text-primary-600 hover:text-primary-700 font-medium transition-colors">Contact</a>
+          <a href="#quiz" class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-200">Find Your Helper</a>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="md:hidden text-neutral-600 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-neutral-100 px-4 py-3 hidden">
+      <nav class="flex flex-col space-y-3">
+        <a href="#services" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Services</a>
+        <a href="#how-it-works" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">How It Works</a>
+        <a href="#pricing" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Pricing</a>
+        <a href="#testimonials" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Testimonials</a>
+        <a href="#biodata" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Helper Profiles</a>
+        <a href="#contact" class="text-neutral-600 hover:text-primary-600 py-2 font-medium transition-colors">Contact</a>
+        <a href="#quiz" class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-5 py-3 rounded-full shadow-sm hover:shadow-md transition-all duration-200 text-center mt-2">Find Your Helper</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section with Properly Positioned Badges -->
+<section class="pt-32 pb-24 relative overflow-hidden">
+    <!-- Background blurred circles -->
+    <div class="blur-circle bg-primary-200 w-[600px] h-[600px] -top-[300px] -left-[300px]"></div>
+    <div class="blur-circle bg-accent-200 w-[500px] h-[500px] -bottom-[250px] -right-[250px]"></div>
+    
+    <div class="container mx-auto px-4 sm:px-6 relative">
+      <!-- Badge Elements in a proper banner layout at top of content -->
+      <div class="flex flex-col md:flex-row gap-3 md:gap-6 justify-center md:justify-end mb-8 md:mb-12 badge-container">
+        <!-- Trusted Helper Badge -->
+        <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-100 transform hover:scale-105 transition-all duration-300">
+          <div class="bg-blue-50 p-2 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857M3 11h18" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-neutral-800 font-medium text-sm">Trusted Helper</h3>
+            <p class="text-neutral-500 text-xs">Professionally Trained</p>
+          </div>
+        </div>
+        
+        <!-- Quick Matching Badge -->
+        <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-200 transform hover:scale-105 transition-all duration-300">
+          <div class="bg-blue-50 p-2 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-neutral-800 font-medium text-sm">Quick Matching</h3>
+            <p class="text-neutral-500 text-xs">Within 24-48 hours</p>
+          </div>
+        </div>
+        
+        <!-- Satisfaction Badge -->
+        <div class="bg-white rounded-xl shadow-md p-3 flex items-center space-x-3 animate-fade-in-delay-300 transform hover:scale-105 transition-all duration-300">
+          <div class="bg-amber-50 p-2 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-neutral-800 font-medium text-sm">Satisfaction</h3>
+            <p class="text-neutral-500 text-xs">100% Guarantee</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="flex flex-col lg:flex-row items-center">
+        <!-- Text Content -->
+        <div class="lg:w-2/3 space-y-6 z-10">
+          <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-[#3366CC] leading-tight animate-fade-in">
+            Stop Stressing<br>
+            <span class="text-neutral-900">Over Helper</span><br>
+            <span class="text-neutral-900">Arrangements</span>
+          </h1>
+          
+          <p class="text-neutral-600 text-lg md:text-xl leading-relaxed max-w-2xl animate-fade-in-delay-200">
+            Find your perfect helper with Wilnor Lavett. We match you with trusted, reliable professionals who fit seamlessly into your home while you focus on what matters most.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-delay-400">
+            <a href="#quiz" class="bg-[#3366CC] hover:bg-[#2855aa] text-white font-medium text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-center transform hover:scale-105">
+              Find Your Perfect Helper
+            </a>
+            <a href="#how-it-works" class="bg-white hover:bg-neutral-50 text-neutral-700 border border-neutral-200 font-medium text-lg px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+              </svg>
+              How It Works
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+
+  <!-- Features Section -->
+  <section id="services" class="py-20 bg-neutral-50">
+    <div class="container mx-auto px-4 sm:px-6">
+      <!-- Section header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Say Goodbye to Worries, Hello to Peace of Mind</h2>
+        <p class="text-neutral-600 text-lg">We handle everything for you - from screening to training - so you can focus on what matters most.</p>
+      </div>
+      
+      <!-- Features grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">Fully Screened Professionals</h3>
+          <p class="text-neutral-600 mb-6">We rigorously screen all our helpers through background checks, skills assessment, and character references to ensure they're trustworthy and qualified.</p>
+          <a href="#biodata" class="text-primary-600 font-medium inline-flex items-center group">
+            View our helpers
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">Clear Pricing, No Hidden Fees</h3>
+          <p class="text-neutral-600 mb-6">Our transparent one-time payment covers everything for 12 months. No surprises, no additional costs, so you can budget with confidence.</p>
+          <a href="#pricing" class="text-primary-600 font-medium inline-flex items-center group">
+            View pricing
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+          <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">24/7 Support Team</h3>
+          <p class="text-neutral-600 mb-6">Our dedicated support team is available around the clock to assist with any questions, concerns, or guidance you may need.</p>
+          <a href="#contact" class="text-primary-600 font-medium inline-flex items-center group">
+            Contact support
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+        
+
+              <!-- Features Section (continued) -->
+              <!-- Feature 4 -->
+              <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+                <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 014.288-2.356M3 3l18 18" />
+                  </svg>
+                </div>
+                <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">No Placement, No Fee</h3>
+                <p class="text-neutral-600 mb-6">If we can't find you a suitable helper within 30 days, we'll refund your full payment. Your satisfaction is guaranteed.</p>
+                <a href="#pricing" class="text-primary-600 font-medium inline-flex items-center group">
+                  Learn more
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+              
+              <!-- Feature 5 -->
+              <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+                <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                </div>
+                <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">Comprehensive Training</h3>
+                <p class="text-neutral-600 mb-6">All our helpers complete a rigorous training program covering household management, childcare, eldercare, and Singapore cultural norms.</p>
+                <a href="#how-it-works" class="text-primary-600 font-medium inline-flex items-center group">
+                  Our training
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+              
+              <!-- Feature 6 -->
+              <div class="bg-white rounded-2xl shadow-card p-8 hover:shadow-card-hover transition-all duration-300 feature-card">
+                <div class="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  </svg>
+                </div>
+                <h3 class="font-heading text-xl font-bold text-neutral-900 mb-3">Flexible Payment Options</h3>
+                <p class="text-neutral-600 mb-6">Choose from various payment plans including installment options to suit your financial situation with 0% interest.</p>
+                <a href="#pricing" class="text-primary-600 font-medium inline-flex items-center group">
+                  Payment options
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20 bg-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Simple 4-Step Process to Your Perfect Helper</h2>
+              <p class="text-neutral-600 text-lg">We've streamlined the process to make it as easy as possible for you to find the right helper for your home.</p>
+            </div>
+            
+            <div class="relative">
+              <!-- Timeline line -->
+              <div class="hidden lg:block absolute left-1/2 h-full w-1 bg-gradient-to-b from-primary-500 to-accent-500 -ml-0.5"></div>
+              
+              <!-- Steps container -->
+              <div class="space-y-12 lg:space-y-0">
+                <!-- Step 1 -->
+                <div class="relative lg:flex items-center justify-between">
+                  <div class="lg:w-5/12 mb-8 lg:mb-0 animate-slide-in-left">
+                    <div class="flex items-center lg:justify-end">
+                      <div class="flex-shrink-0 bg-primary-600 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl mr-4">1</div>
+                      <h3 class="font-heading text-2xl font-bold text-neutral-900">Tell Us Your Needs</h3>
+                    </div>
+                    <p class="mt-4 text-neutral-600 lg:text-right">Complete our simple questionnaire about your household needs, preferences, and expectations for your helper.</p>
+                  </div>
+                  
+                  <div class="hidden lg:block w-2/12 flex-shrink-0 text-center">
+                    <div class="bg-primary-600 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold mx-auto"></div>
+                  </div>
+                  
+                  <div class="lg:w-5/12 animate-slide-in-right">
+                    <div class="bg-neutral-50 rounded-2xl p-6 shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1573497491765-dccce02b29df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Questionnaire" class="rounded-lg w-full h-auto">
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="relative lg:flex items-center justify-between">
+                  <div class="lg:w-5/12 order-last animate-slide-in-right">
+                    <div class="bg-neutral-50 rounded-2xl p-6 shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Matching process" class="rounded-lg w-full h-auto">
+                    </div>
+                  </div>
+                  
+                  <div class="hidden lg:block w-2/12 flex-shrink-0 text-center order-2">
+                    <div class="bg-primary-600 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold mx-auto"></div>
+                  </div>
+                  
+                  <div class="lg:w-5/12 mb-8 lg:mb-0 order-first lg:order-3 animate-slide-in-left">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 bg-primary-600 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl mr-4">2</div>
+                      <h3 class="font-heading text-2xl font-bold text-neutral-900">We Find Your Matches</h3>
+                    </div>
+                    <p class="mt-4 text-neutral-600">Our algorithm matches you with 3-5 pre-screened candidates that best fit your requirements within 24-48 hours.</p>
+                  </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="relative lg:flex items-center justify-between">
+                  <div class="lg:w-5/12 mb-8 lg:mb-0 animate-slide-in-left">
+                    <div class="flex items-center lg:justify-end">
+                      <div class="flex-shrink-0 bg-primary-600 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl mr-4">3</div>
+                      <h3 class="font-heading text-2xl font-bold text-neutral-900">Interview & Select</h3>
+                    </div>
+                    <p class="mt-4 text-neutral-600 lg:text-right">Conduct video interviews with your matches. We provide interview guides and translation services if needed.</p>
+                  </div>
+                  
+                  <div class="hidden lg:block w-2/12 flex-shrink-0 text-center">
+                    <div class="bg-primary-600 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold mx-auto"></div>
+                  </div>
+                  
+                  <div class="lg:w-5/12 animate-slide-in-right">
+                    <div class="bg-neutral-50 rounded-2xl p-6 shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Interview process" class="rounded-lg w-full h-auto">
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="relative lg:flex items-center justify-between">
+                  <div class="lg:w-5/12 order-last animate-slide-in-right">
+                    <div class="bg-neutral-50 rounded-2xl p-6 shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Helper arriving" class="rounded-lg w-full h-auto">
+                    </div>
+                  </div>
+                  
+                  <div class="hidden lg:block w-2/12 flex-shrink-0 text-center order-2">
+                    <div class="bg-primary-600 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold mx-auto"></div>
+                  </div>
+                  
+                  <div class="lg:w-5/12 mb-8 lg:mb-0 order-first lg:order-3 animate-slide-in-left">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 bg-primary-600 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl mr-4">4</div>
+                      <h3 class="font-heading text-2xl font-bold text-neutral-900">Helper Arrives</h3>
+                    </div>
+                    <p class="mt-4 text-neutral-600">We handle all paperwork and logistics. Your helper arrives ready to work, with ongoing support from our team.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20 bg-gradient-to-b from-neutral-50 to-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Transparent, All-Inclusive Pricing</h2>
+              <p class="text-neutral-600 text-lg">One simple payment covers everything for 12 months. No hidden fees or surprises.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <!-- Basic Plan -->
+              <div class="bg-white rounded-2xl shadow-card overflow-hidden hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2">
+                <div class="bg-neutral-100 px-6 py-4">
+                  <h3 class="font-heading text-xl font-bold text-neutral-900">Basic Placement</h3>
+                  <p class="text-neutral-600 text-sm">Standard matching service</p>
+                </div>
+                <div class="p-6">
+                  <div class="mb-6">
+                    <span class="text-4xl font-bold text-neutral-900">$1,988</span>
+                    <span class="text-neutral-600">/one-time</span>
+                  </div>
+                  <ul class="space-y-3 mb-8">
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Access to our helper database</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">3-5 matched candidates</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Basic background checks</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">30-day replacement guarantee</span>
+                    </li>
+                  </ul>
+                  <a href="#contact" class="block w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-medium py-3 px-4 rounded-lg text-center transition-colors duration-300">Get Started</a>
+                </div>
+              </div>
+              
+              <!-- Popular Plan -->
+              <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300 border-2 border-primary-500 relative">
+                <div class="absolute top-0 right-0 bg-primary-500 text-white text-xs font-bold px-3 py-1 transform translate-x-2 -translate-y-2 rotate-12">MOST POPULAR</div>
+                <div class="bg-primary-500 px-6 py-4">
+                  <h3 class="font-heading text-xl font-bold text-white">Premium Placement</h3>
+                  <p class="text-primary-100 text-sm">Best value with full support</p>
+                </div>
+                <div class="p-6">
+                  <div class="mb-6">
+                    <span class="text-4xl font-bold text-neutral-900">$2,588</span>
+                    <span class="text-neutral-600">/one-time</span>
+                  </div>
+                  <ul class="space-y-3 mb-8">
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Everything in Basic, plus:</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Priority matching (24h)</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Comprehensive background checks</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Video interview assistance</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">90-day replacement guarantee</span>
+                    </li>
+                  </ul>
+                  <a href="#contact" class="block w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-300">Get Started</a>
+                </div>
+              </div>
+              
+              <!-- Elite Plan -->
+              <div class="bg-white rounded-2xl shadow-card overflow-hidden hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2">
+                <div class="bg-neutral-100 px-6 py-4">
+                  <h3 class="font-heading text-xl font-bold text-neutral-900">Elite Placement</h3>
+                  <p class="text-neutral-600 text-sm">Concierge matching service</p>
+                </div>
+                <div class="p-6">
+                  <div class="mb-6">
+                    <span class="text-4xl font-bold text-neutral-900">$3,288</span>
+                    <span class="text-neutral-600">/one-time</span>
+                  </div>
+                  <ul class="space-y-3 mb-8">
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Everything in Premium, plus:</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Dedicated placement specialist</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">Unlimited candidate matching</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">In-person interviews available</span>
+                    </li>
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-neutral-600">180-day replacement guarantee</span>
+                    </li>
+                  </ul>
+                  <a href="#contact" class="block w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-medium py-3 px-4 rounded-lg text-center transition-colors duration-300">Get Started</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+              <p class="text-neutral-600 mb-4">Need flexible payment options?</p>
+              <a href="#contact" class="inline-flex items-center text-primary-600 font-medium group">
+                Ask about our installment plans
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20 bg-neutral-900 text-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Trusted by Singapore Families</h2>
+              <p class="text-neutral-300 text-lg">Don't just take our word for it. Here's what our clients say about their experience.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <!-- Testimonial 1 -->
+              <div class="bg-neutral-800 rounded-2xl p-8 hover:bg-neutral-700 transition-all duration-300">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Sarah Lim" class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <h4 class="font-heading font-bold text-white">Sarah Lim</h4>
+                    <p class="text-neutral-400 text-sm">Tampines</p>
+                  </div>
+                </div>
+                <div class="flex mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <p class="text-neutral-300 mb-6">"Our helper Maria has been with us for 2 years now and she's become like family. Wilnor Lavett matched us perfectly with someone who understands our needs and fits our household dynamic."</p>
+                <p class="text-neutral-400 text-sm">Hired in 2022 • Childcare specialist</p>
+              </div>
+              
+              <!-- Testimonial 2 -->
+              <div class="bg-neutral-800 rounded-2xl p-8 hover:bg-neutral-700 transition-all duration-300">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Raj Patel" class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <h4 class="font-heading font-bold text-white">Raj Patel</h4>
+                    <p class="text-neutral-400 text-sm">Bukit Timah</p>
+                  </div>
+                </div>
+                <div class="flex mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <p class="text-neutral-300 mb-6">"The matching process was incredibly smooth. We were connected with 4 excellent candidates and found the perfect helper for our elderly parents within a week. Highly recommend!"</p>
+                <p class="text-neutral-400 text-sm">Hired in 2023 • Elderly care specialist</p>
+              </div>
+              
+              <!-- Testimonial 3 -->
+              <div class="bg-neutral-800 rounded-2xl p-8 hover:bg-neutral-700 transition-all duration-300">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Lisa Wong" class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <h4 class="font-heading font-bold text-white">Lisa Wong</h4>
+                    <p class="text-neutral-400 text-sm">Sentosa Cove</p>
+                  </div>
+                </div>
+                <div class="flex mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <p class="text-neutral-300 mb-6">"After a bad experience with another agency, Wilnor Lavett restored our faith. Their thorough vetting process and ongoing support made all the difference. Our helper Ana is a godsend!"</p>
+                <p class="text-neutral-400 text-sm">Hired in 2021 • Household management</p>
+              </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+              <a href="#testimonials" class="inline-flex items-center text-primary-400 font-medium group">
+                Read more testimonials
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Helper Profiles Section -->
+        <section id="biodata" class="py-20 bg-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Meet Our Helpers</h2>
+              <p class="text-neutral-600 text-lg">All our helpers are carefully selected and trained to meet Singapore's high standards.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <!-- Helper 1 -->
+              <div class="bg-white rounded-2xl shadow-card overflow-hidden hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2">
+                <div class="relative">
+                  <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Maria Santos" class="w-full h-64 object-cover">
+                  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <h3 class="font-heading text-xl font-bold text-white">Maria Santos</h3>
+                    <p class="text-neutral-200 text-sm">From Philippines • 5 years experience</p>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Childcare</span>
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Cooking</span>
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Elderly Care</span>
+                  </div>
+                  <p class="text-neutral-600 mb-6">Maria has extensive experience caring for children of all ages and is also trained in basic nursing care for elderly family members. Fluent in English and Tagalog.</p>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <p class="text-neutral-400 text-sm">Available from:</p>
+                      <p class="text-neutral-800 font-medium">15 Aug 2023</p>
+                    </div>
+                    <a href="#contact" class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center group">
+                      Contact
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Helper 2 -->
+              <div class="bg-white rounded-2xl shadow-card overflow-hidden hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2">
+                <div class="relative">
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Siti Aisyah" class="w-full h-64 object-cover">
+                  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <h3 class="font-heading text-xl font-bold text-white">Siti Aisyah</h3>
+                    <p class="text-neutral-200 text-sm">From Indonesia • 3 years experience</p>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Housekeeping</span>
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Cooking</span>
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Pet Care</span>
+                  </div>
+                  <p class="text-neutral-600 mb-6">Siti specializes in household management and is an excellent cook, particularly with Indonesian and Malay cuisine. She's also great with pets and has basic first aid training.</p>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <p class="text-neutral-400 text-sm">Available from:</p>
+                      <p class="text-neutral-800 font-medium">Immediately</p>
+                    </div>
+                    <a href="#contact" class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center group">
+                      Contact
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Helper 3 -->
+              <div class="bg-white rounded-2xl shadow-card overflow-hidden hover:shadow-card-hover transition-all duration-300 transform hover:-translate-y-2">
+                <div class="relative">
+                  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Myanmar Khin" class="w-full h-64 object-cover">
+                  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <h3 class="font-heading text-xl font-bold text-white">Khin Mar</h3>
+                    <p class="text-neutral-200 text-sm">From Myanmar • 7 years experience</p>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Elderly Care</span>
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">Special Needs</span>
+                    <span class="bg-primary-50 text-primary-700 text-xs font-medium px-2.5 py-0.5 rounded">First Aid</span>
+                  </div>
+                  <p class="text-neutral-600 mb-6">Khin has extensive experience in elderly care and special needs support. She's trained in first aid, physiotherapy assistance, and medication management.</p>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <p class="text-neutral-400 text-sm">Available from:</p>
+                      <p class="text-neutral-800 font-medium">1 Sep 2023</p>
+                    </div>
+                    <a href="#contact" class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center group">
+                      Contact
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+              <a href="#biodata" class="inline-flex items-center text-primary-600 font-medium group">
+                View more helper profiles
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Quiz Section -->
+        <section id="quiz" class="py-20 bg-neutral-50">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-card overflow-hidden">
+              <div class="md:flex">
+                <div class="md:w-1/2 bg-primary-600 p-8 md:p-12 text-white">
+                  <h2 class="font-heading text-3xl font-bold mb-4">Find Your Perfect Helper</h2>
+                  <p class="mb-6 text-primary-100">Answer a few quick questions and we'll match you with helpers that fit your specific needs and preferences.</p>
+                  <div class="space-y-4">
+                    <div class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-200 mt-0.5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <p class="text-primary-100">Takes less than 2 minutes</p>
+                    </div>
+                    <div class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-200 mt-0.5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <p class="text-primary-100">Get matched within 24 hours</p>
+                    </div>
+                    <div class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-200 mt-0.5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      <p class="text-primary-100">No obligation to hire</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="md:w-1/2 p-8 md:p-12">
+                  <form id="helper-quiz" class="space-y-6">
+                    <!-- Question 1 -->
+                    <div>
+                      <label for="primary-need" class="block text-sm font-medium text-neutral-700 mb-2">What's your primary need for a helper?</label>
+                      <select id="primary-need" name="primary-need" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500">
+                        <option value="">Select an option</option>
+                        <option value="childcare">Childcare</option>
+                        <option value="elderly-care">Elderly care</option>
+                        <option value="housekeeping">General housekeeping</option>
+                        <option value="cooking">Cooking</option>
+                        <option value="special-needs">Special needs care</option>
+                        <option value="pet-care">Pet care</option>
+                      </select>
+                    </div>
+                    
+                    <!-- Question 2 -->
+                    <div>
+                      <label class="block text-sm font-medium text-neutral-700 mb-2">How soon do you need a helper?</label>
+                      <div class="space-y-2">
+                        <div class="flex items-center">
+                          <input id="immediately" name="timeline" type="radio" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300">
+                          <label for="immediately" class="ml-3 block text-sm text-neutral-700">Immediately (within 2 weeks)</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="1month" name="timeline" type="radio" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300">
+                          <label for="1month" class="ml-3 block text-sm text-neutral-700">Within 1 month</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="flexible" name="timeline" type="radio" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300">
+                          <label for="flexible" class="ml-3 block text-sm text-neutral-700">Flexible timeline</label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Question 3 -->
+                    <div>
+                      <label for="experience" class="block text-sm font-medium text-neutral-700 mb-2">Minimum experience required?</label>
+                      <select id="experience" name="experience" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500">
+                        <option value="">No preference</option>
+                        <option value="1">1+ years</option>
+                        <option value="3">3+ years</option>
+                        <option value="5">5+ years</option>
+                        <option value="10">10+ years</option>
+                      </select>
+                    </div>
+                    
+                    <!-- Question 4 -->
+                    <div>
+                      <label class="block text-sm font-medium text-neutral-700 mb-2">Language requirements?</label>
+                      <div class="space-y-2">
+                        <div class="flex items-center">
+                          <input id="english" name="language" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300 rounded">
+                          <label for="english" class="ml-3 block text-sm text-neutral-700">English</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="mandarin" name="language" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300 rounded">
+                          <label for="mandarin" class="ml-3 block text-sm text-neutral-700">Mandarin</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="malay" name="language" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300 rounded">
+                          <label for="malay" class="ml-3 block text-sm text-neutral-700">Malay</label>
+                        </div>
+                        <div class="flex items-center">
+                          <input id="tamil" name="language" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300 rounded">
+                          <label for="tamil" class="ml-3 block text-sm text-neutral-700">Tamil</label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">Find My Matches</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- FAQ Section -->
+        <section class="py-20 bg-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl mx-auto">
+              <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-neutral-600">Everything you need to know about hiring a helper with Wilnor Lavett.</p>
+              </div>
+              
+              <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-neutral-200 rounded-xl overflow-hidden">
+                  <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-neutral-50 transition-colors duration-200">
+                    <h3 class="font-heading font-medium text-neutral-900">How long does the matching process take?</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-500 transform transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <div class="faq-content hidden px-6 pb-6 pt-0">
+                    <p class="text-neutral-600">Typically, we're able to provide 3-5 suitable matches within 24-48 hours after understanding your requirements. The entire process from initial contact to helper arrival usually takes 2-4 weeks, depending on your urgency and the helper's availability.</p>
+                  </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border border-neutral-200 rounded-xl overflow-hidden">
+                  <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-neutral-50 transition-colors duration-200">
+                    <h3 class="font-heading font-medium text-neutral-900">What if I'm not satisfied with the helper?</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-500 transform transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <div class="faq-content hidden px-6 pb-6 pt-0">
+                    <p class="text-neutral-600">We offer a replacement guarantee period (30-180 days depending on your plan) where we'll find you a new helper at no additional cost if you're unsatisfied for any reason. Our goal is your complete satisfaction.</p>
+                  </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="border border-neutral-200 rounded-xl overflow-hidden">
+                  <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-neutral-50 transition-colors duration-200">
+                    <h3 class="font-heading font-medium text-neutral-900">What kind of training do your helpers receive?</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-500 transform transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <div class="faq-content hidden px-6 pb-6 pt-0">
+                    <p class="text-neutral-600">All our helpers complete a comprehensive 4-week training program that covers: Singapore household norms and expectations, basic first aid and safety, childcare and eldercare techniques, housekeeping standards, and communication skills. Specialized helpers receive additional training in areas like special needs care or gourmet cooking.</p>
+                  </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="border border-neutral-200 rounded-xl overflow-hidden">
+                  <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-neutral-50 transition-colors duration-200">
+                    <h3 class="font-heading font-medium text-neutral-900">How does the payment process work?</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-500 transform transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <div class="faq-content hidden px-6 pb-6 pt-0">
+                    <p class="text-neutral-600">We require a 50% deposit to begin the matching process, with the remaining 50% due when your helper arrives. We accept all major credit cards, bank transfers, and cash. Installment plans are available with 0% interest over 3-6 months.</p>
+                  </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="border border-neutral-200 rounded-xl overflow-hidden">
+                  <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-neutral-50 transition-colors duration-200">
+                    <h3 class="font-heading font-medium text-neutral-900">What paperwork do I need to prepare?</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-500 transform transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <div class="faq-content hidden px-6 pb-6 pt-0">
+                    <p class="text-neutral-600">We handle all the complex paperwork for you. You'll just need to provide: 1) Copy of your NRIC, 2) Recent utility bill as proof of residence, 3) Completed MOM forms (which we'll provide), and 4) Security bond payment. Our team will guide you through every step.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-12 text-center">
+                <p class="text-neutral-600 mb-4">Still have questions?</p>
+                <a href="#contact" class="inline-flex items-center text-primary-600 font-medium group">
+                  Contact our support team
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- CTA Section -->
+        <section class="py-20 bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto text-center">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold mb-6">Ready to Find Your Perfect Helper?</h2>
+              <p class="text-primary-100 text-xl mb-8">Join thousands of Singapore families who've found reliable, trustworthy help through Wilnor Lavett.</p>
+              <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#quiz" class="bg-white hover:bg-neutral-100 text-primary-600 font-medium text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-center">
+                  Start Matching Now
+                </a>
+                <a href="#contact" class="bg-transparent hover:bg-white/10 border-2 border-white text-white font-medium text-lg px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center">
+                  Speak to Our Team
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto">
+              <div class="text-center mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Get In Touch</h2>
+                <p class="text-neutral-600">We're here to help you with any questions about finding the right helper for your home.</p>
+              </div>
+              
+              <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div>
+                  <div class="space-y-8">
+                    <div class="flex items-start">
+                      <div class="bg-primary-50 p-3 rounded-full mr-6 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 class="font-heading text-lg font-bold text-neutral-900 mb-1">Phone</h3>
+                        <p class="text-neutral-600">+65 8765 4321</p>
+                        <p class="text-neutral-400 text-sm">Mon-Sat, 9am-7pm</p>
+                      </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                      <div class="bg-primary-50 p-3 rounded-full mr-6 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 class="font-heading text-lg font-bold text-neutral-900 mb-1">Email</h3>
+                        <p class="text-neutral-600">enquiry@wilnorlavett.com</p>
+                        <p class="text-neutral-400 text-sm">Typically reply within 2 hours</p>
+                      </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                      <div class="bg-primary-50 p-3 rounded-full mr-6 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 class="font-heading text-lg font-bold text-neutral-900 mb-1">Office</h3>
+                        <p class="text-neutral-600">101 Upper Cross Street</p>
+                        <p class="text-neutral-600">#05-15 People's Park Centre</p>
+                        <p class="text-neutral-600">Singapore 058357</p>
+                        <p class="text-neutral-400 text-sm mt-1">By appointment only</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-12">
+                    <h3 class="font-heading text-xl font-bold text-neutral-900 mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                      <a href="#" class="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 p-3 rounded-full transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                        </svg>
+                      </a>
+                      <a href="#" class="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 p-3 rounded-full transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                      </a>
+                      <a href="#" class="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 p-3 rounded-full transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div>
+                  <form class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label for="first-name" class="block text-sm font-medium text-neutral-700 mb-1">First Name</label>
+                        <input type="text" id="first-name" name="first-name" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500">
+                      </div>
+                      <div>
+                        <label for="last-name" class="block text-sm font-medium text-neutral-700 mb-1">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500">
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label for="email" class="block text-sm font-medium text-neutral-700 mb-1">Email</label>
+                      <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                    
+                    <div>
+                      <label for="phone" class="block text-sm font-medium text-neutral-700 mb-1">Phone Number</label>
+                      <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                    
+                    <div>
+                      <label for="message" class="block text-sm font-medium text-neutral-700 mb-1">How Can We Help?</label>
+                      <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-primary-500 focus:border-primary-500"></textarea>
+                    </div>
+                    
+                    <div>
+                      <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">Send Message</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- Footer -->
+        <footer class="bg-neutral-900 text-white pt-16 pb-8">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+              <!-- About -->
+              <div>
+                <h3 class="font-heading text-lg font-bold mb-4">Wilnor Lavett</h3>
+                <p class="text-neutral-400 mb-4">Connecting Singapore families with trusted, professional domestic helpers since 2010.</p>
+                <div class="flex space-x-4">
+                  <a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                    </svg>
+                  </a>
+                  <a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                  </a>
+                  <a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Quick Links -->
+              <div>
+                <h3 class="font-heading text-lg font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                  <li><a href="#services" class="text-neutral-400 hover:text-white transition-colors duration-300">Our Services</a></li>
+                  <li><a href="#how-it-works" class="text-neutral-400 hover:text-white transition-colors duration-300">How It Works</a></li>
+                  <li><a href="#pricing" class="text-neutral-400 hover:text-white transition-colors duration-300">Pricing</a></li>
+                  <li><a href="#testimonials" class="text-neutral-400 hover:text-white transition-colors duration-300">Testimonials</a></li>
+                  <li><a href="#biodata" class="text-neutral-400 hover:text-white transition-colors duration-300">Helper Profiles</a></li>
+                </ul>
+              </div>
+              
+              <!-- Support -->
+              <div>
+                <h3 class="font-heading text-lg font-bold mb-4">Support</h3>
+                <ul class="space-y-2">
+                  <li><a href="#contact" class="text-neutral-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+                  <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">FAQs</a></li>
+                  <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">Helper Training</a></li>
+                  <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">Employer Resources</a></li>
+                  <li><a href="#" class="text-neutral-400 hover:text-white transition-colors duration-300">MOM Requirements</a></li>
+                </ul>
+              </div>
+              
+              <!-- Newsletter -->
+              <div>
+                <h3 class="font-heading text-lg font-bold mb-4">Newsletter</h3>
+                <p class="text-neutral-400 mb-4">Subscribe to get tips on household management and helper care.</p>
+                <form class="flex">
+                  <input type="email" placeholder="Your email" class="px-4 py-3 rounded-l-lg w-full focus:outline-none text-neutral-900">
+                  <button type="submit" class="bg-primary-600 hover:bg-primary-700 px-4 py-3 rounded-r-lg transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+            
+            <div class="border-t border-neutral-800 pt-8">
+              <div class="md:flex md:items-center md:justify-between">
+                <p class="text-neutral-400 text-sm">© 2023 Wilnor Lavett. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                  <ul class="flex space-x-6">
+                    <li><a href="#" class="text-neutral-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a></li>
+                    <li><a href="#" class="text-neutral-400 hover:text-white text-sm transition-colors duration-300">Terms of Service</a></li>
+                    <li><a href="#" class="text-neutral-400 hover:text-white text-sm transition-colors duration-300">Sitemap</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>    
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+        });
+    
+        // FAQ toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+    
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+    
+            // Rotate the icon for visual feedback (optional)
+            icon.classList.toggle('rotate-180');
+        });
+        });
+    </script>
+    
